@@ -1,0 +1,142 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<main role="main" class="container">
+
+  <div class="user-profile my-5">
+
+    <div class="row px-5">
+      <div class="col-2">
+        {% if user.picture %}
+        <img src="{{request.user.picture.url}}" class="rounded-circle" width="150" height="150" alt="user_img">
+
+        {% else %}
+        <img src="{% static 'core/images/user.jpg' %}" class="rounded-circle" width="150" height="150" alt="user_img">
+        {% endif %}
+      </div>
+      <div class="col-9 offset-1">
+        <div class="username_row1 row my-3">
+          <ul>
+            <li class="username"> {{request.user.username}} </li>
+            <li> <a class="btn btn-sm btn-info mx-5" href="{% url 'profile_edit_view' request.user.username %}">Edit
+                Profile </a> </li>
+            <li> <a class="btn btn-sm btn-danger mx-5" href="{% url 'password_change_view'%}">Change Password </a> </li>
+            <li> <a href="#"><i class="fas fa-cog fa-lg"></i></a> </li>
+          </ul>
+
+        </div>
+        <div class="username_row2 row my-3 fs-5">
+          <ul>
+            <li> {{ request.user.posts_count }} post </li>
+            <li> {{ request.user.follower_count }} followers </li>
+            <li> {{ request.user.following_count }} following </li>
+          </ul>
+
+        </div>
+        <div class="row my-3">
+          <span>{{request.user.full_name}}</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="add-post row">
+      <span></span>
+      <ul>
+        <div class="col-5 offset-1">
+          <li> <a class="post-btn" href="">Post</a>
+
+            <div class="photo-box">
+
+              {% if request.user.posts_count != 0 %}
+              {% for post in request.user.post_set.all %}
+
+
+
+              <div class="card m-2" style="width: 20rem;">
+                <a href="{% url 'post_detail_view' post.pk %}"> <img class="card-img-top" src="{{post.image.url}}"
+                    alt="user_post"> </a>
+                <div class="card-body">
+
+                  <p class="card-text text-center">
+                    <i class="far fa-heart fa-sm ms-1"></i> {{post.likes_count}}
+                    <i class="far fa-comment fa-sm ms-1"></i> {{post.comments_count}}
+                    <i class="fas fa-trash fa-sm ms-2" data-bs-toggle="modal"
+                      data-bs-target="#post_delete_{{ post.pk }}"></i>
+                  </p>
+                </div>
+              </div>
+
+
+              <!--Modal Box Starts-->
+
+              <div class="modal fade" id="post_delete_{{ post.pk }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <h6 class="text-center" id="exampleModalLabel"> Do you really wanna delete your post?</h6>
+
+                    </div>
+
+                    <div class="text-center my-3">
+                      <form action="{% url 'post_delete_view' post.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="button" class="btn btn-danger btn-sm px-3" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-success btn-sm px-3">Yes</button>
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--Modal Box ENd-->
+              {% endfor %}
+              {% else %}
+
+              No post exists!
+
+              {% endif %}
+
+            </div>
+          </li>
+
+        </div>
+        <div class="col-6">
+          <li><a class="saved-btn" href="">Saved</a> </li>
+
+             <div class="photo-box">
+
+              {% if not request.user.posts_count != 0 %}
+              {% for post in request.user.savedpost_set.all %}
+
+              <div class="card m-2" style="width: 20rem;">
+                <a href="{% url 'post_detail_view' post.pk %}"> <img class="card-img-top" src="{{post.image.url}}"
+                    alt="user_post"> </a>
+                <div class="card-body">
+
+                  <p class="card-text text-center">
+                    <i class="far fa-heart fa-sm ms-1"></i> {{post.likes_count}}
+                    <i class="far fa-comment fa-sm ms-1"></i> {{post.comments_count}}
+                    <i class="fas fa-trash fa-sm ms-2" data-bs-toggle="modal" data-bs-target="#post_delete_{{ post.pk }}"></i>
+                  </p>
+                </div>
+              </div>
+
+              {% endfor %}
+              {% endif %}
+
+        </div>
+
+      </ul>
+
+    </div>
+
+</main><!-- /.container -->
+
+
+
+{% endblock content %}

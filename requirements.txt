@@ -1,0 +1,6 @@
+gunicorn
+whitenoise
+psycopg2
+django
+pillow
+django-crum

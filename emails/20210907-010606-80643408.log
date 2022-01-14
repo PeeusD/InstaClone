@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: newuaer@gmail.com
+Date: Mon, 06 Sep 2021 19:36:06 -0000
+Message-ID: <163095696639.5564.6799757577547829023@MY-PC>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/password/reset/confirm/Nw/askz26-8324d15a9e7a46f04689cd2e731d7557
+
+Your username, in case you’ve forgotten: newuaer@gmail.com
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

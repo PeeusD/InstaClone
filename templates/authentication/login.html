@@ -1,0 +1,109 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Insta-Clone | Login</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'authentication/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'authentication/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'authentication/css/core.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 text-center">
+                <img class="mobile-img my-4" src="{% static 'authentication/img/promo-mobile.png'%}" alt="logo" width="400"
+                            height="550">
+                            <img class="slider-img rounded" name="slide" width="215" height="385" />
+            </div>
+            <div class="col-6">
+           
+                <form class="form-login border rounded mt-5 mb-2" method='POST'>
+                    {% csrf_token %}
+                    <div class="logo  text-center">
+                        <img class="my-4" src="{% static 'authentication/img/logo.png'%}" alt="logo" width="200"
+                            height="80">
+                    </div> 
+                     {% if messages  %}
+                    {% for message in messages %}
+                    <div class="text-danger fw-bold text-center">{{message}}</div>
+                    {% endfor %} {% endif %}
+                     <!-- EMAIL INPUT -->
+
+                    <div class="form-label-group my-1">
+                        <input type="text" name="email_username" id="inputEmail_Username" class="form-control "
+                            placeholder="Email or Username" required autofocus>
+                         
+                    </div>
+
+                               <!-- PASSWORD INPUT -->
+
+                    <div class="form-label-group my-1">
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        
+                    </div>
+
+                    <button class="btn btn-primary fw-bold my-3" type="submit">Log In</button>
+                    <hr>
+                    <p class="text-center fw-bold my-2"><a href=""><i class="fab fa-facebook-square"></i> Login with
+                            Facebook</a></p>
+                    <p class="text-center my-2"> <a href="{% url 'password_reset' %}"> Forgot password?</a> </p>
+                </form>
+                <div class="login-pallete border rounded">
+                    <p class="text-center fw-bold my-2">Don't have an account? <a href="{% url 'sign_up' %}">Sign up</a>
+                    </p>
+
+                </div>
+                <div class="apps-pallete">
+                    <a href="https://play.google.com/store/apps/details?id=com.instagram.android">
+                <img src="{% static 'authentication/img/appstore.png'%}" alt="applogo" width="260" height="50"></a>
+                        </div>
+            </div>
+
+        </div>
+        <p class="mt-5 mb-3 text-muted text-center text-secondary">Made with <i class="fas fa-heartbeat"></i> By Peeus
+            D. &copy; 2021-2022</p>
+        <p class="mt-5 mb-3 text-muted text-center text-secondary">
+            Email-->newuser123@gmail.com--------Pass-->kuchbhikar012
+
+            <br>
+            Email-->peeustest1@gmail.com-- Username-->peeustest1------Pass-->ilovemywork0123
+            <br>---user1@gmail.com----ilovemywork36
+            <br>
+            AdminEmail-->admin1@admin.com-----AdminPass-->admin1
+        </p>
+    </div>
+
+
+
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+
+    <script src="{% static 'authentication/js/jquery.js' %}"></script>
+    <script src="{% static 'authentication/js/popper.js' %}"></script>
+    <script src="{% static 'authentication/js/core.js' %}"></script>
+    <script src="{% static 'authentication/js/all.min.css' %}"></script>
+    <script src="{% static 'authentication/js/bootstrap.css' %}"></script>
+
+</body>
+
+</html>

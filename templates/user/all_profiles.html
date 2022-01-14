@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  <main role="main" class="container">
+
+ {% if all_profiles %}
+  {% for user in all_profiles %}
+
+    <div class="row fw-bold px-5" >
+        <div class="card  my-3">
+            <ul class="card-body">
+                <li class="col-2"> {% if user.picture %}
+                    <img src="/media/{{user.picture}}"  class="rounded-circle" width="30" height="30" alt="user_img">
+                    {% else %}
+                    <img src="{% static 'core/images/user.jpg' %}" class="rounded-circle" width="30" height="30" alt="no_img">
+                    {% endif %}</li>
+                <li class="col-4">   {{user.full_name}}</li>
+                <li class="col-1 offset-1"> <a class=" btn btn-sm btn-dark"  href="{% url 'profile_view' user.username %}"> Profile</a></li>
+                <li class="col-2"> <a class=" btn btn-sm btn-info"  href="#"> Follow</a></li>
+            </ul>
+        </div>
+    </div>
+
+    {% endfor %}
+   {% else %}
+   <div class="card px-4 py-4 my-4 text-center">
+  <h5> No profile found!</h5>
+   </div>
+   {% endif %}
+
+  </main><!-- /.container -->
+    {% endblock content %}
+ 

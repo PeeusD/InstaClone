@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+  <main role="main" class="container">
+
+    <div class="user-profile my-5">
+
+      <div class="row px-5">
+        <div class="col-2">
+          {% if user.picture %}
+          <img src="{{user.picture.url}}" class="rounded-circle" width="150" height="150" alt="user_img">
+          {% else %}
+          <img src="{% static 'core/images/user.jpg' %}" class="rounded-circle" width="150" height="150" alt="user_img">
+
+          {% endif %}
+
+        </div>
+        <div class="col-9 offset-1">
+          <div class="username_row1 row my-3">
+            <ul>
+              <li class="username"> {{user.username}} </li>
+
+              {% if not is_follows_this_user %}
+              <li>
+                <form method="POST" action="{% url 'follow_done_view' %}">
+                  {% csrf_token %}
+                  <input type="number" name="followed_user_id" hidden value="{{ user.pk }}">
+                  <button class="btn btn-info mx-3" type="submit"> Follow </button>
+                </form>
+              </li>
+
+              {% else %}
+
+              <li>
+                <form method="POST" action="{% url 'unfollow_done_view' %}">
+                  {% csrf_token %}
+                  <input type="number" name="unfollowed_user_id" hidden value="{{ user.pk }}">
+                  <button class="btn btn-danger mx-3" type="submit"> Unfollow </button>
+                </form>
+              </li>
+              {% endif %}
+
+              <li> <a href="#"><i class="fas fa-cog fa-lg"></i></a> </li>
+            </ul>
+
+          </div>
+          <div class="username_row2 row my-3 fs-5">
+            <ul>
+              <li> {{ user.posts_count }} post </li>
+              <li> {{ user.follower_count }} followers </li>
+              <li> {{ user.following_count }} following </li>
+
+            </ul>
+
+          </div>
+          <div class="row my-3">
+            <span>{{user.full_name}}</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="add-post row">
+        <span></span>
+        <ul>
+          <div class="col-5 offset-1">
+            <li>
+
+              <div class="photo-box">
+
+                {% if user.posts_count != 0 %}
+                {% for post in user.post_set.all %}
+
+
+
+                <div class="card m-2" style="width: 20rem;">
+                  <a href="{% url 'post_detail_view' post.pk %}"> <img class="card-img-top" src="{{post.image.url}}"
+                      alt="user_post"> </a>
+                  <div class="card-body">
+
+                    <p class="card-text text-center">
+                      <i class="far fa-heart fa-sm ms-1"></i> {{post.likes_count}}
+                      <i class="far fa-comment fa-sm ms-1"></i> {{post.comments_count}}
+                     
+                    </p>
+                  </div>
+                </div>
+
+
+              
+                {% endfor %}
+                {% else %}
+
+                No post exists!
+
+                {% endif %}
+
+              </div>
+
+            </li>
+
+          </div>
+          <div class="col-6">
+            <li><a class="saved-btn" href="">Saved</a> </li>
+          </div>
+
+
+
+        </ul>
+
+
+      </div>
+
+  </main><!-- /.container -->
+
+{% endblock content %}

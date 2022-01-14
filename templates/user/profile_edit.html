@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container ">
+        <div class=" edit-form my-5">
+            <div class="card profile-edit-card">
+                <div class="card-header">
+                    <p class="m-2 text-center fw-bold">Edit Profile</p>
+                </div>
+                <div class="card-body offset-md-2">
+                    {% if request.user.picture %}
+                    <div class="user-img">
+                        <img src="{{ user.picture.url }}" alt="user_img" width="80" height="80" class="rounded-circle text-center">
+                    </div>
+                    {% else %}
+                    <div class="user-img">
+                        <img src="{% static 'core/images/user.jpg'%}" alt="no_img" class="rounded-circle">
+                    </div>
+                    {% endif %}
+
+                    <!-- Profile Edit Form -->
+                        {% if messages %}
+                        {% for message in messages %}
+                       <h2 class="text-center  my-5"> {{message}}</h2>
+                       {% endfor %}
+                        {% endif %}
+                    <form enctype="multipart/form-data" method="post">
+                        {% csrf_token%}
+                        {% for field in form %}
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 form-label text-end fw-bold mt-4" for="{{ field.auto_id }}">{{ field.label }}</label>
+                            <div class="col-sm-8">
+                                {{ field }}
+                                <small class="form-text text-muted" id="passwordHelpBlock">
+                                    {{ field.help_text }}
+                                </small>
+                                <div class="invalid-feedback">
+                                    {{ field.errors }}
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                        <div class="offset-md-2 my-1">
+                            <button class="btn btn-sm btn-primary">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,135 @@
+{% extends 'core/base.html'%}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+
+                <div class="card-body">
+                    <img src="{{ post.image.url }}" height="400" alt="post_img">
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-4">
+
+            <div class="card text-dark bg-light" style="max-width: 38rem;">
+                <div class="card-header">
+                    {% if post.user.picture %}
+                    <a href=" {% url 'profile_view' post.user.username %}" style="text-decoration : none; color: #000;">
+                        <img class="rounded-circle m-2" height="60" src="{{ post.user.picture.url }}" alt="user_img">
+                        <span class=" fs-3"> {{ post.user.username }} </span>
+                    </a>
+
+                    {% else %}
+
+                    <img src="{% static 'core/images/user.jpg' %}" alt="">
+                    {% endif %}
+                </div>
+
+                <div class="card-body p-2">
+                    <h4 class="card-title">
+                        <ul >  <!--post like dislike-->
+                            {% if not liked_this_post %}
+                            <form action="{% url 'post_like_view' post.pk %}" method="POST">
+                                {% csrf_token %}
+                                <li>
+                                    <button class="btn btn-sm ms-2" type="submit"><i class="far fa-heart fa-lg"></i>
+                                        {{post.likes_count}} </button>
+                                </li>
+                            </form>
+
+                            {% else %}
+                            <form action="{% url 'post_unlike_view' post.pk %}" method="POST">
+                                {% csrf_token %}
+                                <li>
+                                    <button class="btn btn-sm ms-2" type="submit"><i class="fas fa-heart fa-lg"></i>
+                                        {{post.likes_count}} </button>
+                                </li>
+                            </form>
+                            {% endif %}
+
+                            <li>  <!--post comment-->
+                                <button class="btn btn-sm me-5" type="reset"><i class="far fa-comment fa-lg"></i>
+                                    {{post.comments_count}} </button>
+                            </li>
+
+                            <li>  <!--post save-->
+                                {% if not post_saved %}
+                                 <form action="{% url 'post_save_view' post.pk %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-sm ms-5" type="submit"><i class="far fa-bookmark fa-lg"></i></button>
+                                </form>
+
+                                {% else %}
+
+                                 <form action="{% url 'post_unsave_view' post.pk %}"  method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-sm ms-5" type="submit"><i class="fas fa-bookmark fa-lg"></i></button>
+                                </form>
+                                {% endif %}
+                               
+                            </li>
+                        </ul>
+                    </h4>
+
+
+                    <p class="card-text ">
+
+                        <!--All Comments section-->
+
+                    <div class="all_comment-section ">
+
+
+                        {% if comments %}
+                        {% for comment in comments %}
+                        <p>
+                            {% if comment.user.picture %}
+
+                            <img class="rounded-circle m-2" height="25" src="{{ comment.user.picture.url }}"
+                                alt="user_img">
+                            
+                            {% else %}
+                            <img src="{% static 'core/images/user.jpg' %}" alt="usr_img">
+                            {% endif %}
+
+                            <span class="fs-6 fw-bold"> {{ comment.user.username }} </span> <br>
+
+                            <span style="font-size:15px;" class="ms-5"> {{comment}} </span>
+
+                        </p>
+                        {% endfor %}
+                        {% endif %}
+
+                    </div>
+                    </p>
+                </div>
+
+                <!--commment box-->
+                <div class="comment-section mx-2">
+                    <form action=" {% url 'post_comment_view' post.pk %} " method="post">
+                        {% csrf_token %}
+                        <textarea class="form-control" name="comment-box" placeholder="Add your comments ..." id=""
+                            cols="4" rows="2"></textarea> <br>
+                        <button type="submit" class="btn btn-secondary btn-sm mb-4">Post</button>
+                    </form>
+
+                </div>
+
+                <!--commment box end-->
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+{% endblock content %}

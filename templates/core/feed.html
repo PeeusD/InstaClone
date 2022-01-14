@@ -1,0 +1,140 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block profile_home_btn %}
+
+  <li><a class="dropdown-item" href="{% url 'profile_view' request.user.username %}"><i class="fas fa-user fa-lg"></i> Profile</a></li>
+  {% endblock profile_home_btn %}
+
+{% block content %}
+  <main role="main" class="container">
+
+    <div class="user-profile my-5">
+
+      <div class="row px-5" >
+        <div class="col-2">
+        {% if user.picture %}
+          <img src="{{request.user.picture.url}}" class="rounded-circle" width="150" height="150" alt="user_img">
+        
+        {% else %}
+         <img src="{% static 'core/images/user.jpg' %}" class="rounded-circle" width="150" height="150" alt="user_img">
+        {% endif %}
+        </div>
+        <div class="col-9 offset-1">
+            <div class="username_row1 row my-3"> 
+              <ul >
+                <li class="username"> {{request.user.username}}</li>
+                 <li> <a class="btn btn-sm btn-info mx-5" href="{% url 'profile_edit_view' request.user.username %}">Edit Profile </a> </li>
+                <li> <a href="#" ><i class="fas fa-cog fa-lg"></i></a> </li>
+              </ul>
+               
+             </div>
+            <div class="username_row2 row my-3 fs-5">
+              <ul>
+                <li> {{ request.user.posts_count }} post </li>
+                <li>{{ request.user.follower_count }} followers </li>
+                <li> {{ request.user.following_count }} following </li>
+              </ul>
+              
+            </div>
+            <div class="row my-3 fs-6">
+              
+                <span> {{user.full_name}}</span> 
+                
+                
+                <h6>{% if user.bio %}{{user.bio}}{% endif %}</h6> 
+                <h6 class="text-info">{% if user.website %}{{user.website}}{% endif %}</h6> 
+               
+
+            </div>
+          
+      </div>
+    </div>
+
+     <div class="add-post row">
+      <span></span>
+        <ul>  
+           <div class="col-5 offset-1">  
+          <li > <a class="post-btn" href="">Post</a>
+           <div class="photo-box">
+             <img src="{% static 'user/images/member-1.png' %}" alt="p1">
+             <img src="{% static 'user/images/member-2.png' %}" alt="p2">
+             <img src="{% static 'user/images/member-3.png' %}" alt="p3">
+             <img src="{% static 'user/images/member-4.png' %}" alt="p4">
+             <img src="{% static 'user/images/member-5.png' %}" alt="p5">
+             <img src="{% static 'user/images/member-6.png' %}" alt="p6">
+             <img src="{% static 'user/images/member-1.png' %}" alt="p7">
+             <img src="{% static 'user/images/member-2.png' %}" alt="p8">
+             <img src="{% static 'user/images/member-3.png' %}" alt="p9">
+           
+            
+           </div>
+           </li>
+          
+         </div>
+        <div class="col-6">  
+           <li ><a class="saved-btn" href="">Saved</a> </li>
+          </div>
+         
+        
+         
+        </ul>
+
+      
+    </div>
+  <div class="card px-3 py-3 mx-3 my-2">
+    <form action="{% url 'post_create_view' %}" method="post" enctype='multipart/form-data'>
+      {% csrf_token %}
+      
+      {% if messages %}
+        {% for message in messages %}
+        {{message}}
+        {% endfor %}
+      {% endif %}
+        {% for field in form %}
+          <div class="mb-2">{{ field }}</div>   
+       {% endfor %}
+     <button type="submit" class="btn btn-sm btn-primary" >Save</button>
+    </form>
+  </div>
+
+     
+ 
+  
+    {% if all_posts %}
+      {% for post in all_posts %}
+       <div class="card col-4 m-5 ">
+       <div class="card-header">
+       {% if user.picture %}
+       <img src="{{user.picture.url}}" class="rounded-circle mx-2" width="15" height="15" alt="user_img">
+       {% else %}
+         <img src="{% static 'core/images/user.jpg' %}" class="rounded-circle" width="15" height="15" alt="user_img">
+       {% endif %}
+       
+           {{user.full_name}}
+        <a href="{% url 'post_detail_view' post.pk %}" style="float: right;" class="text-decoration-none" >Go to Post</a>
+       </div>
+       <!--user's post -->
+       {% if post.text %}
+       <div class="card-body fw-bold">
+       {{post.text}}
+       </div>
+       {% endif %}
+              <!--user's images -->
+        <img src="{{post.image.url}}"  alt="user_post_img">
+        </div>
+      {% endfor %}
+
+      {% else %}
+      No post exists!
+      {% endif %}
+
+
+    
+   
+   
+
+  </main><!-- /.container -->
+
+  {% endblock content %}
