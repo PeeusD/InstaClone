@@ -80,14 +80,14 @@ WSGI_APPLICATION = 'insta_clone.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-''' HEROKU-POSTGRES DB SETTING---> USER:PASSWORD:HOST:NAME:PORT '''
+''' HEROKU-POSTGRES DB SETTING---> USER:PASSWORD:HOST:DBNAME:PORT '''
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'da9vj357fmgtgq',
         'USER': 'qznlthdoyftmyl',
-        'HOST': 'ec2-54-195-76-73.eu-west-1.compute.amazonaws.com',
+        'HOST': 'ec2-79-125-93-182.eu-west-1.compute.amazonaws.com',
         'PASSWORD': 'a6f10d5adf9e1c616dae10887b1dd5ad8d8ac4d6240f1ad714d317f9d1d9d8da',
         'PORT': 5432,
     }
