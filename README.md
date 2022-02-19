@@ -2,10 +2,11 @@
 ## Used Builtin functionalities:
 * Authentication form
 * Login form
-* Admin Dashboard
 * Logout Function
 * Password Reset Functionalities
-* Django-Jazzmin-A beautiful UI Admin Dashboard
+* Admin Dashboard(Django-Jazzmin)-A beautiful UI Admin Dashboard
+* AJAX POST-GET request(without any reloads)
+* Django Channels(A library for 2 way communication which use thread pool)
 
 ## Usage:
 **Method to run this website on your local machine**
